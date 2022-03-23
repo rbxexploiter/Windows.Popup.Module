@@ -32,7 +32,7 @@ local function LoadUtilities(Style, Frame)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
-			startPos = Frame.Position
+			startPos = ListOfUtilites.Position
 
 			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
@@ -50,7 +50,7 @@ local function LoadUtilities(Style, Frame)
 
 	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging then
-			UpdateFrame(input, ListOfUtilites)
+			UpdateFrame(input, Frame)
 		end
 	end)
 	
