@@ -209,11 +209,12 @@ end;
 
 local lastMousePos
 local lastGoalPos
-local DRAG_SPEED = (8); -- // The speed of the UI darg.
-function Update(dt)
+local DRAG_SPEED = (8)
+
+function Update(dt, Frame)
 	if not (startPos) then return end;
 	if not (dragging) and (lastGoalPos) then
-		_G.Frame.Position = UDim2.new(startPos.X.Scale, Lerp(_G.Frame.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(_G.Frame.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
+		Frame.Position = UDim2.new(startPos.X.Scale, Lerp(Frame.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(Frame.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
 		return 
 	end;
 
@@ -221,29 +222,8 @@ function Update(dt)
 	local xGoal = (startPos.X.Offset - delta.X);
 	local yGoal = (startPos.Y.Offset - delta.Y);
 	lastGoalPos = UDim2.new(startPos.X.Scale, xGoal, startPos.Y.Scale, yGoal)
-	_G.Frame.Position = UDim2.new(startPos.X.Scale, Lerp(_G.Frame.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(_G.Frame.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
-end;
-
-_G.Frame.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-		dragging = true
-		dragStart = input.Position
-		startPos = _G.Frame.Position
-		lastMousePos = UserInputService:GetMouseLocation()
-
-		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then
-				dragging = false
-			end
-		end)
-	end
-end)
-
-_G.Frame.InputChanged:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-		dragInput = input
-	end
-end)
+	Frame.Position = UDim2.new(startPos.X.Scale, Lerp(Frame.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(Frame.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
+end
 
 runService.Heartbeat:Connect(Update)
 
@@ -304,7 +284,26 @@ function Modules:CreateFrame(Style, Size)
 		Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	end
 	
-	_G.Frame = Frame
+	Frame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = Frame.Position
+			lastMousePos = UserInputService:GetMouseLocation()
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	Frame.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
 	
 	LoadUtilities(Style, Frame)
 end
