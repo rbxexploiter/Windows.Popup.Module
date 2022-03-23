@@ -28,7 +28,7 @@ local function LoadUtilities(Style, Frame)
 	List.VerticalAlignment = Enum.VerticalAlignment.Top
 	List.Padding = UDim.new(0, 4)
 	
-	ListOfUtilites.InputBegan:Connect(function(input)
+	Frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
@@ -42,7 +42,7 @@ local function LoadUtilities(Style, Frame)
 		end
 	end)
 
-	ListOfUtilites.InputChanged:Connect(function(input)
+	Frame.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
