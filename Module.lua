@@ -211,10 +211,12 @@ local lastMousePos
 local lastGoalPos
 local DRAG_SPEED = (8)
 
-function Update(dt, Frame)
+local FakeFrame = nil
+
+function Update(dt)
 	if not (startPos) then return end;
 	if not (dragging) and (lastGoalPos) then
-		Frame.Position = UDim2.new(startPos.X.Scale, Lerp(Frame.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(Frame.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
+		FakeFrame.Position = UDim2.new(startPos.X.Scale, Lerp(FakeFrame.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(FakeFrame.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
 		return 
 	end;
 
@@ -222,7 +224,7 @@ function Update(dt, Frame)
 	local xGoal = (startPos.X.Offset - delta.X);
 	local yGoal = (startPos.Y.Offset - delta.Y);
 	lastGoalPos = UDim2.new(startPos.X.Scale, xGoal, startPos.Y.Scale, yGoal)
-	Frame.Position = UDim2.new(startPos.X.Scale, Lerp(Frame.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(Frame.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
+	FakeFrame.Position = UDim2.new(startPos.X.Scale, Lerp(FakeFrame.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(FakeFrame.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
 end
 
 runService.Heartbeat:Connect(Update)
@@ -283,6 +285,8 @@ function Modules:CreateFrame(Style, Size)
 		Stroke.LineJoinMode = Enum.LineJoinMode.Miter
 		Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	end
+	
+	FakeFrame = Frame
 	
 	Frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
