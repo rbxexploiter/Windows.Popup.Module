@@ -28,32 +28,6 @@ local function LoadUtilities(Style, Frame)
 	List.VerticalAlignment = Enum.VerticalAlignment.Top
 	List.Padding = UDim.new(0, 4)
 	
-	Frame.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = true
-			dragStart = input.Position
-			startPos = Frame.Position
-
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragging = false
-				end
-			end)
-		end
-	end)
-
-	Frame.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			dragInput = input
-		end
-	end)
-
-	UserInputService.InputChanged:Connect(function(input)
-		if input == dragInput and dragging then
-			UpdateFrame(input, Frame)
-		end
-	end)
-	
 	local CloseButton = nil
 	if tostring(Style[1]) == "11" then
 		CloseButton = Instance.new("ImageButton", ListOfUtilites)
@@ -273,6 +247,32 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
 	Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Shadow.ZIndex = 0
+	
+	Frame.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = Frame.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+	
+	Frame.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			UpdateFrame(input, Frame)
+		end
+	end)
 	
 	if Style[2]:lower() == "dark" then
 		Frame.BackgroundColor3 = Color3.new(0.180392, 0.180392, 0.180392)
