@@ -2,6 +2,18 @@ local Modules = {}
 
 local Speed = 0.05
 
+local UserInputService = game:GetService("UserInputService")
+
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function UpdateFrame(input, Frame)
+	local delta = input.Position - dragStart
+	Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
 local function LoadUtilities(Style, Frame)
 	local ListOfUtilites = Instance.new("Frame", Frame)
 	ListOfUtilites.Size = UDim2.new(1, 0,0, 30)
@@ -15,6 +27,32 @@ local function LoadUtilities(Style, Frame)
 	List.HorizontalAlignment = Enum.HorizontalAlignment.Right
 	List.VerticalAlignment = Enum.VerticalAlignment.Top
 	List.Padding = UDim.new(0, 4)
+	
+	ListOfUtilites.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+			dragging = true
+			dragStart = input.Position
+			startPos = Frame.Position
+
+			input.Changed:Connect(function()
+				if input.UserInputState == Enum.UserInputState.End then
+					dragging = false
+				end
+			end)
+		end
+	end)
+
+	ListOfUtilites.InputChanged:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			UpdateFrame(input, ListOfUtilites)
+		end
+	end)
 	
 	local CloseButton = nil
 	if tostring(Style[1]) == "11" then
@@ -195,18 +233,6 @@ local function LoadUtilities(Style, Frame)
 	end
 end
 
-local UserInputService = game:GetService("UserInputService")
-
-local dragging
-local dragInput
-local dragStart
-local startPos
-
-local function update(input, Frame)
-	local delta = input.Position - dragStart
-	Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-end
-
 function Modules:CreateFrame(Style, Size)
 	local CreateScreenUI = Instance.new("ScreenGui")
 	CreateScreenUI.Parent = _G.Parent
@@ -263,32 +289,6 @@ function Modules:CreateFrame(Style, Size)
 		Stroke.LineJoinMode = Enum.LineJoinMode.Miter
 		Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	end
-	
-	Frame.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-			dragging = true
-			dragStart = input.Position
-			startPos = Frame.Position
-
-			input.Changed:Connect(function()
-				if input.UserInputState == Enum.UserInputState.End then
-					dragging = false
-				end
-			end)
-		end
-	end)
-
-	Frame.InputChanged:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-			dragInput = input
-		end
-	end)
-
-	UserInputService.InputChanged:Connect(function(input)
-		if input == dragInput and dragging then
-			update(input,Frame)
-		end
-	end)
 	
 	LoadUtilities(Style, Frame)
 end
