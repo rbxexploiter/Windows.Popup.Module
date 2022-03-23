@@ -196,38 +196,16 @@ local function LoadUtilities(Style, Frame)
 end
 
 local UserInputService = game:GetService("UserInputService")
-local runService = (game:GetService("RunService"));
 
 local dragging
 local dragInput
 local dragStart
 local startPos
 
-function Lerp(a, b, m)
-	return a + (b - a) * m
-end;
-
-local lastMousePos
-local lastGoalPos
-local DRAG_SPEED = (8)
-
-local FakeFrame = nil
-
-function Update(dt)
-	if not (startPos) then return end;
-	if not (dragging) and (lastGoalPos) then
-		FakeFrame.Position = UDim2.new(startPos.X.Scale, Lerp(FakeFrame.Position.X.Offset, lastGoalPos.X.Offset, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(FakeFrame.Position.Y.Offset, lastGoalPos.Y.Offset, dt * DRAG_SPEED))
-		return 
-	end;
-
-	local delta = (lastMousePos - UserInputService:GetMouseLocation())
-	local xGoal = (startPos.X.Offset - delta.X);
-	local yGoal = (startPos.Y.Offset - delta.Y);
-	lastGoalPos = UDim2.new(startPos.X.Scale, xGoal, startPos.Y.Scale, yGoal)
-	FakeFrame.Position = UDim2.new(startPos.X.Scale, Lerp(FakeFrame.Position.X.Offset, xGoal, dt * DRAG_SPEED), startPos.Y.Scale, Lerp(FakeFrame.Position.Y.Offset, yGoal, dt * DRAG_SPEED))
+local function update(input, Frame)
+	local delta = input.Position - dragStart
+	Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
-
-runService.Heartbeat:Connect(Update)
 
 function Modules:CreateFrame(Style, Size)
 	local CreateScreenUI = Instance.new("ScreenGui")
@@ -286,14 +264,11 @@ function Modules:CreateFrame(Style, Size)
 		Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	end
 	
-	FakeFrame = Frame
-	
 	Frame.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
 			startPos = Frame.Position
-			lastMousePos = UserInputService:GetMouseLocation()
 
 			input.Changed:Connect(function()
 				if input.UserInputState == Enum.UserInputState.End then
@@ -306,6 +281,12 @@ function Modules:CreateFrame(Style, Size)
 	Frame.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			update(input,Frame)
 		end
 	end)
 	
