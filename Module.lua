@@ -20,6 +20,7 @@ local function LoadUtilities(Style, Frame)
 	ListOfUtilites.AnchorPoint = Vector2.new(1, 0)
 	ListOfUtilites.Position = UDim2.new(1, 0,0, 0)
 	ListOfUtilites.BackgroundTransparency = 1
+	ListOfUtilites.Name = "ListOfUtilites"
 	
 	local List = Instance.new("UIListLayout", ListOfUtilites)
 	List.SortOrder = Enum.SortOrder.LayoutOrder
@@ -40,6 +41,7 @@ local function LoadUtilities(Style, Frame)
 		CloseButton.ImageColor3 = Color3.new(1,0,0)
 		CloseButton.Size = UDim2.new(0,40,1,0)
 		CloseButton.LayoutOrder = 1
+		CloseButton.Name = "CloseButton"
 	else
 		CloseButton = Instance.new("TextButton", ListOfUtilites)
 		CloseButton.BackgroundTransparency = 1
@@ -48,6 +50,7 @@ local function LoadUtilities(Style, Frame)
 		CloseButton.LayoutOrder = 1
 		CloseButton.Text = ""
 		CloseButton.BorderSizePixel = 0
+		CloseButton.Name = "CloseButton"
 	end
 	
 	local SetBottom = Instance.new("TextButton", ListOfUtilites)
@@ -57,6 +60,7 @@ local function LoadUtilities(Style, Frame)
 	SetBottom.LayoutOrder = 0
 	SetBottom.Text = ""
 	SetBottom.BorderSizePixel = 0
+	SetBottom.Name = "SetBottom"
 	
 	local ICO = Instance.new("ImageLabel", CloseButton)
 	ICO.Name = "ICO"
@@ -86,6 +90,7 @@ local function LoadUtilities(Style, Frame)
 	TitleIcon.Position = UDim2.new(0, 5, 0, 3)
 	TitleIcon.Image = "rbxassetid://"..tostring(Style[3])
 	TitleIcon.ScaleType = Enum.ScaleType.Fit
+	TitleIcon.Name = "TitleIcon"
 	
 	local Title = Instance.new("TextLabel", Frame)
 	Title.Size = UDim2.new(0.3, 0, 0, 15)
@@ -95,6 +100,7 @@ local function LoadUtilities(Style, Frame)
 	Title.TextColor3 = Color3.new(1, 1, 1)
 	Title.TextScaled = true
 	Title.RichText = true
+	Title.Name = "Title"
 	
 	game:GetService("RunService").RenderStepped:Connect(function()
 		if TitleIcon.IsLoaded == true then
@@ -222,6 +228,7 @@ function Modules:CreateFrame(Style, Size)
 	Frame.Size = Size
 	Frame.AutoButtonColor = false
 	Frame.BorderSizePixel = 0
+	Frame.Name = "POPUP.DISPLAY"
 	
 	local x = Frame.AbsoluteSize.X
 	local y = Frame.AbsoluteSize.y
@@ -247,8 +254,9 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.AnchorPoint = Vector2.new(0.5, 0.5)
 	Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Shadow.ZIndex = 0
+	Shadow.Name = "POPUP.GRADIENT"
 	
-	Frame.InputBegan:Connect(function(input)
+	Frame:FindFirstChild("ListOfUtilites").InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
@@ -262,7 +270,7 @@ function Modules:CreateFrame(Style, Size)
 		end
 	end)
 	
-	Frame.InputChanged:Connect(function(input)
+	Frame:FindFirstChild("ListOfUtilites").InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
