@@ -257,9 +257,8 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.Name = "POPUP.GRADIENT"
 	
 	LoadUtilities(Style, Frame)
-	coroutine.resume(coroutine.create(function())
-		while true do
-			if Frame:FindFirstChild("ListOfUtilites") then
+	game:GetService("RunService").RenderStepped:Connect(function()
+		if Frame:FindFirstChild("ListOfUtilites") then
 				Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 						dragging = true
@@ -282,8 +281,8 @@ function Modules:CreateFrame(Style, Size)
 			end
 			task.wait()
 		end
-	end))
-	
+	end)
+		
 	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging then
 			UpdateFrame(input, Frame)
