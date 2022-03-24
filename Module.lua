@@ -257,30 +257,32 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.Name = "POPUP.GRADIENT"
 	
 	LoadUtilities(Style, Frame)
-	while true do
-		if Frame:FindFirstChild("ListOfUtilites") then
-			Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-					dragging = true
-					dragStart = input.Position
-					startPos = Frame.Position
-
-					input.Changed:Connect(function()
-						if input.UserInputState == Enum.UserInputState.End then
-							dragging = false
-						end
-					end)
-				end
-			end)
-
-			Frame:WaitForChild("ListOfUtilites").InputChanged:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-					dragInput = input
-				end
-			end)
+	coroutine.resume(coroutine.create(function())
+		while true do
+			if Frame:FindFirstChild("ListOfUtilites") then
+				Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+						dragging = true
+						dragStart = input.Position
+						startPos = Frame.Position
+						
+						input.Changed:Connect(function()
+							if input.UserInputState == Enum.UserInputState.End then
+								dragging = false
+							end
+						end)
+					end
+				end)
+				
+				Frame:WaitForChild("ListOfUtilites").InputChanged:Connect(function(input)
+					if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+						dragInput = input
+					end
+				end)
+			end
+			task.wait()
 		end
-		task.wait()
-	end
+	end))
 	
 	UserInputService.InputChanged:Connect(function(input)
 		if input == dragInput and dragging then
