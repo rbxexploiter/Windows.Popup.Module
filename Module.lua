@@ -256,6 +256,7 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.ZIndex = 0
 	Shadow.Name = "POPUP.GRADIENT"
 	
+	LoadUtilities(Style, Frame)
 	Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
@@ -297,8 +298,6 @@ function Modules:CreateFrame(Style, Size)
 		Stroke.LineJoinMode = Enum.LineJoinMode.Miter
 		Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	end
-	
-	LoadUtilities(Style, Frame)
 end
 
 return Modules
