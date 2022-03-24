@@ -257,7 +257,7 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.Name = "POPUP.GRADIENT"
 	
 	LoadUtilities(Style, Frame)
-	game:GetService("RunService").RenderStepped:Connect(function()
+	while true do
 		if Frame:FindFirstChild("ListOfUtilites") then
 			Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
 				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
@@ -284,8 +284,10 @@ function Modules:CreateFrame(Style, Size)
 					UpdateFrame(input, Frame)
 				end
 			end)
+			break
 		end
-	end)
+		task.wait()
+	end
 	
 	if Style[2]:lower() == "dark" then
 		Frame.BackgroundColor3 = Color3.new(0.180392, 0.180392, 0.180392)
