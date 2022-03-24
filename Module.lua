@@ -278,16 +278,15 @@ function Modules:CreateFrame(Style, Size)
 					dragInput = input
 				end
 			end)
-
-			UserInputService.InputChanged:Connect(function(input)
-				if input == dragInput and dragging then
-					UpdateFrame(input, Frame)
-				end
-			end)
-			break
 		end
 		task.wait()
 	end
+	
+	UserInputService.InputChanged:Connect(function(input)
+		if input == dragInput and dragging then
+			UpdateFrame(input, Frame)
+		end
+	end)
 	
 	if Style[2]:lower() == "dark" then
 		Frame.BackgroundColor3 = Color3.new(0.180392, 0.180392, 0.180392)
