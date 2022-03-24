@@ -256,7 +256,7 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.ZIndex = 0
 	Shadow.Name = "POPUP.GRADIENT"
 	
-	Frame:FindFirstChild("ListOfUtilites").InputBegan:Connect(function(input)
+	Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 			dragging = true
 			dragStart = input.Position
@@ -270,7 +270,7 @@ function Modules:CreateFrame(Style, Size)
 		end
 	end)
 	
-	Frame:FindFirstChild("ListOfUtilites").InputChanged:Connect(function(input)
+	Frame:WaitForChild("ListOfUtilites").InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			dragInput = input
 		end
