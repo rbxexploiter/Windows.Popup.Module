@@ -257,8 +257,9 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.Name = "POPUP.GRADIENT"
 	
 	LoadUtilities(Style, Frame)
-	game:GetService("RunService").RenderStepped:Connect(function()
+	connect = game:GetService("RunService").RenderStepped:Connect(function()
 		if Frame:FindFirstChild("ListOfUtilites") then
+				connect:Disconnect()
 				Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
 					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 						dragging = true
