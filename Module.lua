@@ -22,14 +22,14 @@ local function LoadUtilities(Style, Frame)
 	ListOfUtilites.Position = UDim2.new(1, 0,0, 0)
 	ListOfUtilites.BackgroundTransparency = 1
 	ListOfUtilites.Name = "ListOfUtilites"
-	
+
 	local List = Instance.new("UIListLayout", ListOfUtilites)
 	List.SortOrder = Enum.SortOrder.LayoutOrder
 	List.FillDirection = Enum.FillDirection.Horizontal
 	List.HorizontalAlignment = Enum.HorizontalAlignment.Right
 	List.VerticalAlignment = Enum.VerticalAlignment.Top
 	List.Padding = UDim.new(0, 4)
-	
+
 	local CloseButton = nil
 	if tostring(Style[1]) == "11" then
 		CloseButton = Instance.new("ImageButton", ListOfUtilites)
@@ -53,7 +53,7 @@ local function LoadUtilities(Style, Frame)
 		CloseButton.BorderSizePixel = 0
 		CloseButton.Name = "CloseButton"
 	end
-	
+
 	local SetBottom = Instance.new("TextButton", ListOfUtilites)
 	SetBottom.BackgroundTransparency = 1
 	SetBottom.BackgroundColor3 = Color3.new(0, 0, 0)
@@ -62,7 +62,7 @@ local function LoadUtilities(Style, Frame)
 	SetBottom.Text = ""
 	SetBottom.BorderSizePixel = 0
 	SetBottom.Name = "SetBottom"
-	
+
 	local ICO = Instance.new("ImageLabel", CloseButton)
 	ICO.Name = "ICO"
 	ICO.AnchorPoint = Vector2.new(0, 0.5)
@@ -73,7 +73,7 @@ local function LoadUtilities(Style, Frame)
 	ICO.Size = UDim2.new(1, 0, 0.5, 0)
 	ICO.Image = "rbxassetid://9151203899"
 	ICO.ScaleType = Enum.ScaleType.Fit
-	
+
 	local ICO_2 = Instance.new("ImageLabel", SetBottom)
 	ICO_2.Name = "ICO"
 	ICO_2.AnchorPoint = Vector2.new(0, 0.5)
@@ -84,7 +84,7 @@ local function LoadUtilities(Style, Frame)
 	ICO_2.Size = UDim2.new(1, 0, 0.5, 0)
 	ICO_2.Image = "rbxassetid://9151238741"
 	ICO_2.ScaleType = Enum.ScaleType.Fit
-	
+
 	local TitleIcon = Instance.new("ImageLabel", Frame)
 	TitleIcon.Size = UDim2.new(0, 30, 0, 27)
 	TitleIcon.BackgroundTransparency = 1
@@ -92,7 +92,7 @@ local function LoadUtilities(Style, Frame)
 	TitleIcon.Image = "rbxassetid://"..tostring(Style[3])
 	TitleIcon.ScaleType = Enum.ScaleType.Fit
 	TitleIcon.Name = "TitleIcon"
-	
+
 	local Title = Instance.new("TextLabel", Frame)
 	Title.Size = UDim2.new(0.3, 0, 0, 15)
 	Title.BackgroundTransparency = 1
@@ -102,7 +102,7 @@ local function LoadUtilities(Style, Frame)
 	Title.TextScaled = true
 	Title.RichText = true
 	Title.Name = "Title"
-	
+
 	game:GetService("RunService").RenderStepped:Connect(function()
 		if TitleIcon.IsLoaded == true then
 			Title.Position = UDim2.new(0, 37, 0, 7)
@@ -110,7 +110,7 @@ local function LoadUtilities(Style, Frame)
 			Title.Position = UDim2.new(0, 7, 0, 7)
 		end
 	end)
-	
+
 	CloseButton.MouseEnter:Connect(function()
 		if CloseButton:IsA("ImageButton") then
 			game:GetService("TweenService"):Create(CloseButton, TweenInfo.new(Speed), {
@@ -125,7 +125,7 @@ local function LoadUtilities(Style, Frame)
 			ImageColor3 = Color3.new(1,1,1)
 		}):Play()
 	end)
-	
+
 	SetBottom.MouseEnter:Connect(function()
 		game:GetService("TweenService"):Create(SetBottom, TweenInfo.new(Speed), {
 			BackgroundTransparency = 0.9
@@ -134,7 +134,7 @@ local function LoadUtilities(Style, Frame)
 			ImageColor3 = Color3.new(1,1,1)
 		}):Play()
 	end)
-	
+
 	CloseButton.MouseLeave:Connect(function()
 		if CloseButton:IsA("ImageButton") then
 			game:GetService("TweenService"):Create(CloseButton, TweenInfo.new(Speed + 0.2), {
@@ -151,7 +151,7 @@ local function LoadUtilities(Style, Frame)
 			}):Play()
 		end
 	end)
-	
+
 	SetBottom.MouseLeave:Connect(function()
 		game:GetService("TweenService"):Create(SetBottom, TweenInfo.new(Speed + 0.2), {
 			BackgroundTransparency = 1
@@ -162,7 +162,7 @@ local function LoadUtilities(Style, Frame)
 			}):Play()
 		end
 	end)
-	
+
 	CloseButton.MouseButton1Up:Connect(function()
 		if tostring(Style[1]) == "11" then
 			Frame:TweenSize(UDim2.new(0, 0, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quart, 3)
@@ -202,11 +202,11 @@ local function LoadUtilities(Style, Frame)
 			end
 		end
 	end)
-	
+
 	SetBottom.MouseButton1Up:Connect(function()
-		
+
 	end)
-	
+
 	if Style[2]:lower() ~= "dark" then
 		ICO.ImageColor3 = Color3.new(0, 0, 0)
 		ICO_2.ImageColor3 = Color3.new(0, 0, 0)
@@ -220,7 +220,7 @@ function Modules:CreateFrame(Style, Size)
 	CreateScreenUI.Name = "Popup"
 	CreateScreenUI.DisplayOrder = 1616
 	CreateScreenUI.IgnoreGuiInset = true
-	
+
 	local Frame = Instance.new("TextButton")
 	Frame.Parent = CreateScreenUI
 	Frame.Text = ""
@@ -230,7 +230,7 @@ function Modules:CreateFrame(Style, Size)
 	Frame.AutoButtonColor = false
 	Frame.BorderSizePixel = 0
 	Frame.Name = "POPUP.DISPLAY"
-	
+
 	local x = Frame.AbsoluteSize.X
 	local y = Frame.AbsoluteSize.y
 	local ratio = x/y
@@ -242,7 +242,7 @@ function Modules:CreateFrame(Style, Size)
 		constraint.Parent = Frame
 		constraint.AspectRatio = ratio
 	end
-	
+
 	local Shadow = Instance.new("ImageLabel", Frame)
 	Shadow.BackgroundTransparency = 1
 	Shadow.ScaleType = Enum.ScaleType.Slice
@@ -256,56 +256,56 @@ function Modules:CreateFrame(Style, Size)
 	Shadow.Position = UDim2.new(0.5, 0, 0.5, 0)
 	Shadow.ZIndex = 0
 	Shadow.Name = "POPUP.GRADIENT"
-	
+
 	LoadUtilities(Style, Frame)
+	local connect
 	connect = game:GetService("RunService").RenderStepped:Connect(function()
 		if Frame:FindFirstChild("ListOfUtilites") then
-				connect:Disconnect()
-				Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
-					if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-						dragging = true
-						dragStart = input.Position
-						startPos = Frame.Position
-						
-						input.Changed:Connect(function()
-							if input.UserInputState == Enum.UserInputState.End then
-								dragging = false
-							end
-						end)
-					end
-				end)
-				
-				Frame:WaitForChild("ListOfUtilites").InputChanged:Connect(function(input)
-					if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-						dragInput = input
-					end
-				end)
-			end
-			task.wait()
+			connect:Disconnect()
+			Frame:WaitForChild("ListOfUtilites").InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+					dragging = true
+					dragStart = input.Position
+					startPos = Frame.Position
+
+					input.Changed:Connect(function()
+						if input.UserInputState == Enum.UserInputState.End then
+							dragging = false
+						end
+					end)
+				end
+			end)
+
+			Frame:WaitForChild("ListOfUtilites").InputChanged:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+					dragInput = input
+				end
+			end)
 		end
+		task.wait()
 	end)
-		
-	UserInputService.InputChanged:Connect(function(input)
-		if input == dragInput and dragging then
-			UpdateFrame(input, Frame)
-		end
-	end)
-	
-	if Style[2]:lower() == "dark" then
-		Frame.BackgroundColor3 = Color3.new(0.180392, 0.180392, 0.180392)
-	else
-		Frame.BackgroundColor3 = Color3.new(1, 1, 1)
+
+UserInputService.InputChanged:Connect(function(input)
+	if input == dragInput and dragging then
+		UpdateFrame(input, Frame)
 	end
-	if tostring(Style[1]) == "11" then
-		local Corner = Instance.new("UICorner", Frame)
-		Corner.CornerRadius = UDim.new(0, 6)
-	else
-		local Stroke = Instance.new("UIStroke", Frame)
-		Stroke.Color = Color3.new(0, 0, 0)
-		Stroke.Thickness = 1
-		Stroke.LineJoinMode = Enum.LineJoinMode.Miter
-		Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	end
+end)
+
+if Style[2]:lower() == "dark" then
+	Frame.BackgroundColor3 = Color3.new(0.180392, 0.180392, 0.180392)
+else
+	Frame.BackgroundColor3 = Color3.new(1, 1, 1)
+end
+if tostring(Style[1]) == "11" then
+	local Corner = Instance.new("UICorner", Frame)
+	Corner.CornerRadius = UDim.new(0, 6)
+else
+	local Stroke = Instance.new("UIStroke", Frame)
+	Stroke.Color = Color3.new(0, 0, 0)
+	Stroke.Thickness = 1
+	Stroke.LineJoinMode = Enum.LineJoinMode.Miter
+	Stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+end
 end
 
 return Modules
