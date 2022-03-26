@@ -1,5 +1,6 @@
 local Modules = {}
 
+_G.UI_Enabled = false
 local Speed = 0.05
 
 local UserInputService = game:GetService("UserInputService")
@@ -14,7 +15,41 @@ local function UpdateFrame(input, Frame)
 	Frame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
+
 local function LoadUtilities(Style, Frame)
+	local AppsList = nil
+	if _G.UI_Enabled == false then
+		_G.UI_Enabled = true
+		AppsList = Instance.new("Frame", Frame)
+		AppsList.AnchorPoint = Vector2.new(0, 1)
+		AppsList.Size = UDim2.new(1, 0, 0, 70)
+		AppsList.Name = "AppsList"
+		AppsList.BorderSizePixel = 0
+		AppsList.BackgroundTransparency = 1	
+		
+		local List = Instance.new("UIListLayout", AppsList)
+		List.SortOrder = Enum.SortOrder.LayoutOrder
+		List.FillDirection = Enum.FillDirection.Horizontal
+		List.HorizontalAlignment = Enum.HorizontalAlignment.Right
+		List.VerticalAlignment = Enum.VerticalAlignment.Bottom
+		List.Padding = UDim.new(0, 10)
+	end
+	
+	local AppIcon = Instance.new("TextButton", AppsList)
+	AppIcon.Size = UDim2.new(0, 70, 1, 0)
+	AppIcon.BorderSizePixel = 0
+	AppIcon.Text = ""
+	if tostring(Style[1]) == "11" then
+		AppIcon.BackgroundColor3 = Color3.new(0.180392, 0.180392, 0.180392)
+	else
+		AppIcon.BackgroundColor3 = Color3.new(1, 1, 1)
+	end	
+	local AppCorner = Instance.new("UICorner", AppIcon)
+	AppCorner.CornerRadius = UDim.new(0.3, 0)
+	
+	local AppRadius = Instance.new("UIAspectRatioConstraint", AppIcon)
+	
+	-- UTILITES
 	local ListOfUtilites = Instance.new("Frame", Frame)
 	ListOfUtilites.Size = UDim2.new(1, 0,0, 30)
 	ListOfUtilites.AnchorPoint = Vector2.new(1, 0)
@@ -203,7 +238,88 @@ local function LoadUtilities(Style, Frame)
 	end)
 
 	SetBottom.MouseButton1Up:Connect(function()
-
+		AppIcon:TweenSize(UDim2.new(0, 70, 1, 0))
+		Frame:TweenPosition(AppIcon.Position)
+		if tostring(Style[1]) == "11" then
+			_G.FrameSize_TWEEN = game:GetService("TweenService"):Create(Frame, TweenInfo.new(3, Enum.EasingStyle.Quart, Enum.EasingDirection.InOut, 0, true), {
+				Size = UDim2.new(0, 0, 0, 0)
+			})
+			_G.FrameSize_TWEEN:Play()
+			coroutine.resume(coroutine.create(function()
+				task.wait(0.4)
+				_G.FrameSize_TWEEN:Pause()
+			end))
+		else
+			_G.FrameSize_TWEEN = game:GetService("TweenService"):Create(Frame, TweenInfo.new(3, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut, 0, true), {
+				Size = UDim2.new(0, 0, 0, 0)
+			})
+			_G.FrameSize_TWEEN:Play()
+			coroutine.resume(coroutine.create(function()
+				task.wait(0.4)
+				_G.FrameSize_TWEEN:Pause()
+			end))
+		end
+		_G.FRAME_TWEEN = game:GetService("TweenService"):Create(Frame, TweenInfo.new(0.4, Enum.EasingStyle.Quint), {
+			BackgroundTransparency = 1,
+		})
+		_G.FRAME_TWEEN:Play()
+		coroutine.resume(coroutine.create(function()
+			task.wait(0.4)
+			_G.FRAME_TWEEN:Pause()
+		end))
+		if Frame:FindFirstChild("UIStroke") then
+			_G.Stroke_TWEEN = game:GetService("TweenService"):Create(Frame:WaitForChild("UIStroke"), TweenInfo.new(0.4, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut, 0, true), {
+				Transparency = 1,
+			})
+			_G.Stroke_TWEEN:Play()
+			coroutine.resume(coroutine.create(function()
+				task.wait(0.4)
+				_G.Stroke_TWEEN:Pause()
+			end))
+		else
+		end
+		for _,v in pairs(Frame:GetDescendants()) do
+			if v:IsA("GuiBase2d") then
+				if v:IsA("TextButton") or v:IsA("TextBox") or v:IsA("TextLabel") then
+					_G.Texts_TWEEN = game:GetService("TweenService"):Create(v, TweenInfo.new(0.4, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut, 0, true), {
+						BackgroundTransparency = 1,
+						TextTransparency = 1,
+					})
+					_G.Texts_TWEEN:Play()
+					coroutine.resume(coroutine.create(function()
+						task.wait(0.4)
+						_G.Texts_TWEEN:Pause()
+					end))
+				elseif v:IsA("ImageLabel") or v:IsA("ImageButton") then
+					_G.Images_TWEEN = game:GetService("TweenService"):Create(v, TweenInfo.new(0.4, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut, 0, true), {
+						BackgroundTransparency = 1,
+						ImageTransparency = 1,
+					})
+					_G.Images_TWEEN:Play()
+					coroutine.resume(coroutine.create(function()
+						task.wait(0.4)
+						_G.Images_TWEEN:Pause()
+					end))
+				elseif v:IsA("Frame") then
+					_G.Frames_TWEEN = game:GetService("TweenService"):Create(v, TweenInfo.new(0.4, Enum.EasingStyle.Quint, Enum.EasingDirection.InOut, 0, true), {
+						BackgroundTransparency = 1,
+					})
+					_G.Frames_TWEEN:Play()
+					coroutine.resume(coroutine.create(function()
+						task.wait(0.4)
+						_G.Frames_TWEEN:Pause()
+					end))
+				end
+			end
+		end
+		AppIcon.MouseButton1Up:Connect(function()
+			_G.FrameSize_TWEEN:Cancel()
+			_G.FRAME_TWEEN:Cancel()
+			_G.Stroke_TWEEN:Cancel()
+			_G.Texts_TWEEN:Cancel()
+			_G.Images_TWEEN:Cancel()
+			_G.Frames_TWEEN:Cancel()
+		end)
 	end)
 
 	if Style[2]:lower() ~= "dark" then
