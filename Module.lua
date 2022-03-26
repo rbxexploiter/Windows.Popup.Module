@@ -20,7 +20,8 @@ local function LoadUtilities(Style, Frame)
 	local AppsList = nil
 	if _G.UI_Enabled == false then
 		_G.UI_Enabled = true
-		AppsList = Instance.new("Frame", Frame.Parent)
+		AppsList = Instance.new("Frame")
+		AppsList.Parent = Frame.Parent
 		AppsList.AnchorPoint = Vector2.new(0, 1)
 		AppsList.Size = UDim2.new(1, 0, 0, 70)
 		AppsList.Name = "AppsList"
