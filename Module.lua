@@ -20,7 +20,7 @@ local function LoadUtilities(Style, Frame)
 	local AppsList = nil
 	if _G.UI_Enabled == false then
 		_G.UI_Enabled = true
-		AppsList = Instance.new("Frame", Frame)
+		AppsList = Instance.new("Frame", Frame.Parent)
 		AppsList.AnchorPoint = Vector2.new(0, 1)
 		AppsList.Size = UDim2.new(1, 0, 0, 70)
 		AppsList.Name = "AppsList"
@@ -60,7 +60,7 @@ local function LoadUtilities(Style, Frame)
 	local List = Instance.new("UIListLayout", ListOfUtilites)
 	List.SortOrder = Enum.SortOrder.LayoutOrder
 	List.FillDirection = Enum.FillDirection.Horizontal
-	List.HorizontalAlignment = Enum.HorizontalAlignment.Right
+	List.HorizontalAlignment = Enum.HorizontalAlignment.Center
 	List.VerticalAlignment = Enum.VerticalAlignment.Top
 	List.Padding = UDim.new(0, 4)
 
